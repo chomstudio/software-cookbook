@@ -1,0 +1,16 @@
+{
+  "id": "./",
+  "name": "俺俺逆引きマニュアル",
+  "short_name": "逆引きマニュアル",
+  "description": "ソフトウェアの操作・設定・トラブル解決をまとめた個人の調査記録",
+  "lang": "ja",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#141b18",
+  "background_color": "#141b18",
+  "icons": [
+    { "src": "./web/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./web/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

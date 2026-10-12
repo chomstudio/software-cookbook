@@ -106,6 +106,9 @@ export async function buildSite({ root = projectRoot, out = path.join(root, '_si
   await copyFile(path.join(root, 'index.html'), path.join(out, 'index.html'));
   await copyFile(path.join(root, 'web/styles.css'), path.join(out, 'web/styles.css'));
   if (bundle) {
+    await copyFile(path.join(root, 'manifest.webmanifest'), path.join(out, 'manifest.webmanifest'));
+    await mkdir(path.join(out, 'web/icons'), { recursive: true });
+    for (const size of [192, 512]) await copyFile(path.join(root, `web/icons/icon-${size}.png`), path.join(out, `web/icons/icon-${size}.png`));
     await build({ entryPoints: [path.join(root, 'web/app.js')], outfile: path.join(out, 'web/app.js'), bundle: true, format: 'esm', platform: 'browser', target: 'es2022', minify: true, legalComments: 'eof' });
     const notices = [];
     for (const name of ['marked', 'github-slugger', 'dompurify', 'entities']) {

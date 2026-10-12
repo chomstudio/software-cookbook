@@ -162,6 +162,16 @@ software-cookbook/
 - URLで指定された文書パスはカタログの登録内容と照合する。任意URLやルート外のファイルを取得しない。
 - ローカル資産も `cookbooks/` 内で解決できるものに限定する。認証情報をクライアントコードや公開成果物へ含めない。
 
+## デスクトップへのインストール（PWA）
+
+- Windows 11のChrome・Edgeで、ブラウザ標準の操作からインストールし、独立ウィンドウで起動する。
+- アプリ名は「俺俺逆引きマニュアル」、短縮名は「逆引きマニュアル」とする。
+- ルートの `manifest.webmanifest` に識別子、起動URL、スコープ、`standalone` 表示、ダーク配色、192pxと512pxのPNGアイコンを定義する。
+- URLはmanifest基準の相対パスとし、GitHub Pagesのサブパスにも対応する。
+- manifestと `web/icons/` のアイコンを公開成果物へ同梱する。アイコンは `scripts/generate-icons.mjs` で再生成できる。
+- オンライン利用とし、Service Workerによるオフラインキャッシュは導入しない。文書更新と再読み込みの動作は従来どおりとする。
+- 公開時はGitHub PagesのHTTPSを利用する。
+
 ## 自動生成と公開
 
 ### ワークフロー
@@ -228,6 +238,8 @@ software-cookbook/
 - [GitHub公式: GitHub Pagesサイトの発行ソースの構成](https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
 
 ## 変更履歴
+
+- 2026-10-12: オンライン利用のPWAとしてデスクトップへのインストール、独立ウィンドウ起動、manifestとアイコンの配信を追加。
 
 - 2026-10-12: GitHub Pagesで既存Markdownを検索・閲覧し、push時に検索データと公開内容を自動更新する初期仕様を作成。
 - 2026-10-12: 逆引き文書の置き場を `cookbooks/` 配下に変更し、文書検出、ジャンル判定、文書パス、参照資産の収集範囲と受け入れ条件を更新。
