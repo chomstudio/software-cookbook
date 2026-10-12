@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ソフトウェアの操作・設定・トラブル解決を、目的から探す個人の逆引きノート。">
+  <title>Software Cookbook — 逆引きマニュアル</title>
+  <link rel="stylesheet" href="./web/styles.css">
+  <script type="module" src="./web/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">本文へ移動</a>
+  <header class="masthead">
+    <a class="brand" href="./index.html"><span class="brand-symbol" aria-hidden="true">▤</span> SOFTWARE COOKBOOK</a>
+    <span class="edition">操作と解決のノート</span>
+  </header>
+  <main id="main">
+    <section class="intro">
+      <p class="eyebrow">目的から探す、逆引きマニュアル</p>
+      <h1>あの操作、<br class="mobile-break">どうするんだっけ。</h1>
+      <p>ソフトウェアの操作・設定・トラブル解決をまとめた個人の調査記録です。</p>
+    </section>
+    <section class="search-panel" aria-label="文書の検索">
+      <form id="search-form" role="search">
+        <label for="query">ジャンル・アプリ名・項目名・本文を検索</label>
+        <div class="query-row"><input id="query" type="search" placeholder="例：ffmpeg 音声、FL Studio ステップ" autocomplete="off"><button type="submit">検索</button></div>
+        <div class="filters">
+          <label>ジャンル<select id="genre"><option value="">すべてのジャンル</option></select></label>
+          <label>アプリ<select id="app"><option value="">すべてのアプリ</option></select></label>
+          <button class="quiet" id="clear" type="button">条件をクリア</button>
+        </div>
+      </form>
+      <p class="hint">空白で区切ると、すべての語を含む項目を探します。</p>
+    </section>
+    <p id="status" role="status" aria-live="polite">文書一覧を読み込んでいます…</p>
+    <button id="retry" class="quiet" hidden>再試行</button>
+    <section id="listing" aria-label="文書一覧・検索結果"></section>
+    <button id="more" class="quiet" hidden>さらに表示</button>
+    <section id="reader" hidden aria-label="文書の閲覧">
+      <div class="reader-toolbar"><a id="back" href="./index.html">← 一覧・検索結果へ</a><a id="source">Markdown原稿</a></div>
+      <p id="breadcrumb" class="eyebrow"></p>
+      <div class="reader-grid">
+        <aside><nav id="toc" aria-label="文書の目次"></nav></aside>
+        <article id="article" class="markdown"></article>
+      </div>
+    </section>
+    <noscript><p>検索と文書表示にはJavaScriptを有効にしてください。</p></noscript>
+  </main>
+  <footer><span>調べたことを、次の解決に。</span><span>内容の正確性を保証するものではありません。 <a href="./THIRD-PARTY-LICENSES.txt">利用ライブラリ</a></span></footer>
+</body>
+</html>
