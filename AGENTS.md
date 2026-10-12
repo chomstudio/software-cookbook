@@ -6,19 +6,18 @@
 
 ---
 
-- [逆引きマニュアルプロジェクト](#逆引きマニュアルプロジェクト)
-  - [このプロジェクトについて](#このプロジェクトについて)
-  - [フォルダ構成](#フォルダ構成)
-  - [ジャンル（フォルダ）](#ジャンルフォルダ)
-  - [更新手順](#更新手順)
-  - [更新内容](#更新内容)
-    - [更新上の注意点](#更新上の注意点)
-    - [簡潔に書くためのガイド](#簡潔に書くためのガイド)
-  - [ジャンル（項目）](#ジャンル項目)
-  - [更新規則](#更新規則)
-  - [修正](#修正)
-    - [修正履歴](#修正履歴)
-  - [実行環境](#実行環境)
+- [このプロジェクトについて](#このプロジェクトについて)
+- [フォルダ構成](#フォルダ構成)
+- [ジャンル（フォルダ）](#ジャンルフォルダ)
+- [更新手順](#更新手順)
+- [更新内容](#更新内容)
+  - [更新上の注意点](#更新上の注意点)
+  - [簡潔に書くためのガイド](#簡潔に書くためのガイド)
+- [ジャンル（項目）](#ジャンル項目)
+- [更新規則](#更新規則)
+- [修正](#修正)
+  - [修正履歴](#修正履歴)
+- [実行環境](#実行環境)
 
 ---
 
@@ -38,29 +37,35 @@
 ```text
 software-cookbook/
 ├ AGENTS.md
-├ dtm/
-｜├ fl-studio.md
-｜└ studio-one.md
-├ images-and-printing/
-｜├ photoshop.md
-｜└ indesign.md
-├ movie/
-｜├ after-effects.md
-｜├ aviutl2.md
-｜└ premiere.md
-├ text-writing/
-｜└ obsidian.md
-├ programming-language/
-｜├ javascript.md
-｜└ python.md
-├ framework/
-｜├ bulma.md
-｜├ astro.md
-｜└ vue.md
-└ development/
-  ├ git.md
-  └ vscode.md
+├ cookbooks/
+｜├ dtm/
+｜｜├ fl-studio.md
+｜｜└ studio-one.md
+｜├ images-and-printing/
+｜｜├ photoshop.md
+｜｜└ indesign.md
+｜├ movie/
+｜｜├ after-effects.md
+｜｜├ aviutl2.md
+｜｜└ premiere.md
+｜├ text-writing/
+｜｜└ obsidian.md
+｜├ programming-language/
+｜｜├ javascript.md
+｜｜└ python.md
+｜├ framework/
+｜｜├ bulma.md
+｜｜├ astro.md
+｜｜└ vue.md
+｜└ development/
+｜  ├ git.md
+｜  └ vscode.md
+├ .../
+...
+
 ```
+
+更新は /cookbooks/ 以下を対象とする。他のフォルダやルートにあるファイルはいじらないこと。
 
 フォルダ名、ファイル名は基本的に kebab-case を採用する。
 
@@ -104,7 +109,7 @@ markdownlint-cli2 --config "$env:USERPROFILE/.markdownlint.jsonc" "<編集した
 
 例として、質問内容が 「**Adobe Photoshopで起動時にホーム画面を表示しないようにするには？**」 だったとする。
 
-この場合は `/images-and-printing/photoshop.md` が更新対象になる。
+この場合は `/cookbooks/images-and-printing/photoshop.md` が更新対象になる。
 
 具体的な更新内容の例は以下。
 
@@ -133,6 +138,7 @@ markdownlint-cli2 --config "$env:USERPROFILE/.markdownlint.jsonc" "<編集した
 
 - タイトルのすぐ下に「最終更新日」を記録すること。
 - 項目を追加した際はできるだけ目次(TOC)をつけること。
+- TOCは見出しレベル2と3のみ記載すること(`"markdown.extension.toc.levels": "2..3"`に相当)。
 - 各項目はジャンル分けすること。
 - **目次および項目見出しには連番を入れないこと**。
   悪い例:`## 1. 起動時`, `### 1-1. 起動時にホーム画面を表示しないようにするには`
@@ -147,7 +153,7 @@ markdownlint-cli2 --config "$env:USERPROFILE/.markdownlint.jsonc" "<編集した
 項目内容は可能な限り簡潔に書く。以下はより簡潔に書くためのガイドである。
 以下の内容に従うと混乱を招きそうだと判断できる場合は、従わなくて良い。
 
-- 項目名を本文で繰り返さなくて良い。例として、「設定画面を開くには」という項目で「設定画面を開くには、以下の操作を行います。」のような冗長な説明は不要である。
+- 項目名を本文で繰り返さなくて良い。例として「設定画面を開くには」という項目で「設定画面を開くには、以下の操作を行います。」のような冗長な説明は不要である。
 - 「◯◯をクリック」「◯◯を見る」という操作が続く場合は、その◯◯の項目名を`＞`でつなげて記述して良い。途中でダイアログなどを開く操作があっても、その後の操作が明白であればつなげて書いて良い。
   - 例: `編集`＞`環境設定`＞`一般`＞`ホーム画面を自動表示` をオフ
   - この例の操作では実際は「環境設定」を選んだ時点で「環境設定」ダイアログが表示される。その後ダイアログ内の「一般」という項目を探し、続けて操作する、という意味が明白なので、`＞`でつなげで書いて問題ない。
