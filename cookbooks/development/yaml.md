@@ -7,7 +7,7 @@
   - [チートシート](#チートシート)
 - [言語別利用法](#言語別利用法)
   - [Python](#python)
-  - [Javascript(node.js)](#javascriptnodejs)
+  - [node.js](#nodejs)
 
 ---
 
@@ -43,7 +43,9 @@ label can contains space: spaced value
 日本語のラベル名: 日本語テキスト
 
 # ラベル名なし
-: null
+# yamlの仕様としては可能だが、
+# 言語の実装によってはエラーになる
+# : null
 
 # 文字列(一行) --------------------------
 # 文字列中にスペースも入れられる。
@@ -143,7 +145,7 @@ multi-line-string1: 1行目
   3行目
 
 # "1行目\n2行目3行目"
-multi-line-string2: -
+multi-line-string2: |-
   1行目
 
   2行目
@@ -187,8 +189,8 @@ object: # オブジェクト（構造体）の例
 # {} を使ってもOK
 object2: { name: item, value: 300, list: [first, second, third] }
 
-# 区切り
-# --- で区切ると別オブジェクトとして認識
+# ドキュメント区切り
+# --- で区切ると別ドキュメントとして認識
 # 1ファイルに複数オブジェクトを格納可能
 # 下記の場合でも二重定義にならない
 a: 1
@@ -223,7 +225,6 @@ set: !!set
 
 # 他に % = ディレクティブ記号、 ! = タグ記号 などがあるが
 # 殆ど使われない
-
 ```
 
 ## 言語別利用法
@@ -233,35 +234,35 @@ set: !!set
 yaml ライブラリを使う。
 
 ```python
+import sys
+from pprint import pp
+
 import yaml
 
 try:
     # yamlはUnicodeでのみ動く。この場合utf-8を明示
-    with open("./test.yaml", encoding='utf-8', mode="r") as file:
-        data = yaml.safe_load(file)
+    with open("test.yaml", encoding="utf-8") as f:
+        docs = list(yaml.safe_load_all(f))
 except yaml.YAMLError as error:
     print(f"Error parsing YAML file: {error}")
-    exit(1)
+    sys.exit(1)
 
-print(f"{data['string'] = }")
-...
+for doc in docs:
+    pp(doc, indent=2, width=40)
 ```
 
-### Javascript(node.js)
+### node.js
 
 js-yaml ライブラリを使う。
 
 ```Javascript
-import fs from 'node:fs';
-import yaml from 'js-yaml';
+import fs from "fs";
+import yaml from "js-yaml";
 
-try {
-  // yamlはUnicodeでのみ動く。この場合utf-8を明示
-  const fileContents = fs.readFileSync('./data.yaml', 'utf8');
-  const data = yaml.load(fileContents);
-  console.log(data);
-} catch (e) {
-  console.error(e);
+const text = fs.readFileSync("data.yaml", "utf8");
+const documents = yaml.loadAll(text);
+
+for (const doc of documents) {
+  console.log(doc);
 }
-
 ```
