@@ -6,8 +6,11 @@
   - [bulmaを使い始めるには](#bulmaを使い始めるには)
   - [bulmaのドキュメントを見るには](#bulmaのドキュメントを見るには)
 - [レイアウト](#レイアウト)
+- [ライト／ダークテーマを固定するには](#ライトダークテーマを固定するには)
   - [container](#container)
   - [columns/column](#columnscolumn)
+  - [grid/cell](#gridcell)
+  - [fixed-grid](#fixed-grid)
   - [block/box](#blockbox)
 - [ページ構成](#ページ構成)
   - [header](#header)
@@ -20,6 +23,8 @@
   - [title/subtitle](#titlesubtitle)
 - [パーツ](#パーツ)
   - [button](#button)
+  - [card](#card)
+  - [message](#message)
   - [tab](#tab)
   - [form](#form)
   - [menu](#menu)
@@ -59,6 +64,20 @@
 
 ## レイアウト
 
+## ライト／ダークテーマを固定するには
+
+```html
+<html lang="ja" data-theme="light">
+  ...
+</html>
+```
+
+```html
+<html lang="ja" data-theme="dark">
+  ...
+</html>
+```
+
 ### container
 
 - `container`を使うと左右に隙間があいてセンタリングされる
@@ -82,11 +101,10 @@
 
 ### columns/column
 
-- 縦割りレイアウトに使う。（横並びに配置される）
+- ページやブロックを縦割りレイアウトにするときに使う。（横並びに配置される）
 - `columns`の下に`column`を配置する。`column`の数だけ分割される。
 - どの幅で分割／積み重ねになるかは `container` を参照
 - 1/12グリッドを`is-1`～`is-12`で幅指定、無指定でAuto
-- `grid`や`fixed-grid`というものもあるがほぼ使わない
 
 ```html
 <div class="columns">
@@ -94,6 +112,48 @@
   <div class="column">Second column</div>
   <div class="column">Third column</div>
   <div class="column">Fourth column</div>
+</div>
+```
+
+### grid/cell
+
+- tableに近いレイアウト方法。
+- 決められた幅のcellを確保しようとする。`is-col-min-N` で `N x 1.5em` 分の幅のセルを作る。が、幅が狭くなるとやっぱり縮小されていくのであまりにあてにならない。デフォルトでは `is-col-min-6`のようだ
+- columnsと違い、デフォルトで隙間(gap)が用意される
+- `is-col-span`/`is-row-span` で複数個分のグリッド幅を決められる。
+- `is-gap-0～8` でギャップ（隙間）を決める。
+- `is-column-gap-N` で横方向の隙間。
+- `is-row-gap-N` で縦方向の隙間。
+
+```html
+<div class="grid">
+  <div class="cell">Cell 1</div>
+  <div class="cell">Cell 2</div>
+  <div class="cell">Cell 3</div>
+  <div class="cell">Cell 4</div>
+  <div class="cell">Cell 5</div>
+  <div class="cell">Cell 6</div>
+  <div class="cell">Cell 7</div>
+  <div class="cell">Cell 8</div>
+  <div class="cell">Cell 9</div>
+  <div class="cell">Cell 10</div>
+  <div class="cell">Cell 11</div>
+  <div class="cell">Cell 12</div>
+</div>
+```
+
+### fixed-grid
+
+どんな横幅でもN分割される。`has-N-cols` 指定で分割数を指定。省略時 `N=2`
+
+```html
+<div class="fixed-grid has-2-cols">
+  <div class="grid">
+    <div class="cell">Cell 1</div>
+    <div class="cell">Cell 2</div>
+    <div class="cell">Cell 3</div>
+    <div class="cell">Cell 4</div>
+  </div>
 </div>
 ```
 
@@ -271,6 +331,242 @@
 <button class="button is-primary">ボタン</button>
 ```
 
+#### 大きさ
+
+- 複数個並べるときは buttons を使うと、位置がいい感じに合う
+- 縦位置が中央揃えになる、ボタン間に隙間ができる、など
+
+```html
+<div class="buttons">
+  <button class="button is-small">Small</button>
+  <button class="button">Default</button>
+  <button class="button is-normal">Normal</button>
+  <button class="button is-medium">Medium</button>
+  <button class="button is-large">Large</button>
+</div>
+```
+
+横幅いっぱい（縦幅が変化する）
+
+```html
+<div class="buttons">
+  <button class="button is-small is-fullwidth">Small</button>
+  <button class="button is-fullwidth">Normal</button>
+  <button class="button is-medium is-fullwidth">Medium</button>
+  <button class="button is-large is-fullwidth">Large</button>
+</div>
+```
+
+buttons 側でサイズ指定もできる
+
+```html
+<div class="buttons are-medium">
+  <button class="button">All</button>
+  <button class="button">Medium</button>
+  <button class="button">Size</button>
+</div>
+```
+
+#### アウトライン／角丸／テキストのみ／隠し（※textとghostは色指定無効）
+
+```html
+<div class="buttons">
+  <button class="button is-primary is-outlined">is-outlined</button>
+  <button class="button is-primary is-inverted">is-inverted</button>
+  <button class="button is-primary is-rounded">is-rounded</button>
+  <button class="button is-text">is-text</button>
+  <button class="button is-ghost">is-ghost</button>
+</div>
+```
+
+#### 状態変化（通常／マウスオーバー／フォーカス／アクティブ／ロード中／無効
+
+- マウスホバー／フォーカス／アクティブ時は特に自分でつけなくても勝手にスタイルが適用される。（スクリプトで制御したりする必要はない）。
+- 無効は disabled をつけるだけで、クラス指定は不要。
+- ロード中と無効は、ホバーアイコンも変化する
+
+```html
+<div class="buttons">
+  <button class="button is-primary">Normal</button>
+  <button class="button is-primary is-hovered">Hover</button>
+  <button class="button is-primary is-focused">Focus</button>
+  <button class="button is-primary is-active">Active</button>
+  <button class="button is-primary is-loading">Loading</button>
+  <button class="button is-primary" title="Disabled button" disabled>
+    Disabled
+  </button>
+</div>
+```
+
+#### 合体(has-addons)
+
+```html
+<div class="buttons has-addons">
+  <button class="button">Left</button>
+  <button class="button">Center</button>
+  <button class="button">Right</button>
+  </p>
+</div>
+```
+
+#### 中央寄せ、右寄せ
+
+```html
+<div class="buttons has-addons is-centered">
+  <button class="button">Yes</button>
+  <button class="button">Maybe</button>
+  <button class="button">No</button>
+</div>
+
+<div class="buttons has-addons is-right">
+  <button class="button">Yes</button>
+  <button class="button">Maybe</button>
+  <button class="button">No</button>
+</div>
+```
+
+#### 選択状態(疑似コンボボックス)
+
+```html
+<div class="buttons has-addons">
+  <button class="button is-success is-selected">Yes</button>
+  <button class="button">Maybe</button>
+  <button class="button">No</button>
+</div>
+```
+
+### card
+
+- カード。
+
+```html
+<div class="card">
+  <div class="card-content">
+    <div class="content">画像もヘッダもなしの最もシンプルなカード</div>
+  </div>
+</div>
+```
+
+```html
+<div class="card">
+  <header class="card-header has-background-info">
+    <p class="card-header-title">カードヘッダ</p>
+  </header>
+  <div class="card-content">
+    <div class="content">ヘッダとフッタつきのカード</div>
+  </div>
+  <footer class="card-footer">
+    <a href="#" class="card-footer-item">Save</a>
+    <a href="#" class="card-footer-item">Edit</a>
+    <a href="#" class="card-footer-item">Delete</a>
+  </footer>
+</div>
+```
+
+```html
+<div class="card">
+  <div class="card-image">
+    <!-- is-4by3 は 4:3の画像比率を確保してくれる -->
+    <figure class="image is-4by3">
+      <img src="" alt="画像" />
+    </figure>
+  </div>
+  <div class="card-content">
+    <div class="content">サムネ画像つきのカード。</div>
+  </div>
+</div>
+```
+
+```html
+<div class="card">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img src="" alt="ユーザーアイコンなど" />
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4">ユーザー名</p>
+        <p class="subtitle is-6">@アカウント名など</p>
+      </div>
+    </div>
+    <div class="content">SNS風のカード。</div>
+  </div>
+</div>
+```
+
+### message
+
+- ポップアップダイアログ。
+- Bulma単体ではウィンドウを閉じる機能はない。閉じるボタンにClickイベントを仕込む。
+
+```html
+<button class="button js-modal-open" data-target="modal-dialog1">
+  ダイアログを開くボタン
+</button>
+
+<!-- modal に is-active を追加すると表示される。それまでは非表示 -->
+<div class="modal" id="modal-dialog1">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <!-- ここから暗転表示内容  -->
+
+    <article class="message">
+      <div class="message-header">
+        <p>メッセージタイトル</p>
+        <!-- ダイアログの閉じるボタンにも閉じる先を書いておく -->
+        <button
+          class="delete js-modal-close"
+          data-target="modal-dialog1"
+        ></button>
+      </div>
+      <div class="message-body">メッセージ本文</div>
+    </article>
+
+    <!-- 画面右上の閉じるボタン -->
+    <button
+      class="modal-close js-modal-close"
+      data-target="modal-dialog1"
+    ></button>
+
+    <!-- ここまで暗転表示内容 -->
+  </div>
+</div>
+```
+
+```javascript
+document.addEventListener("DOMContentLoaded", () => {
+  //開く関数
+  const openModal = (e) => e && e.classList.add("is-active");
+  //閉じる関数
+  const closeModal = (e) => e && e.classList.remove("is-active");
+  //すべて閉じる関数
+  const closeAllModals = () => {
+    for (const modal of document.querySelectorAll(".modal")) {
+      closeModal(modal);
+    }
+  };
+  // js-modal-trigger がついているボタンやリンクすべてに「開く」イベントを仕込む
+  for (const openner of document.querySelectorAll(".js-modal-trigger")) {
+    const modal = openner.dataset.target;
+    const target = document.getElementById(modal);
+    openner.addEventListener("click", () => openModal(target));
+  }
+  // js-modal-close がついているボタンやリンクすべてに「閉じる」イベントを仕込む
+  for (const closer of document.querySelectorAll(".js-modal-close")) {
+    const modal = closer.dataset.target;
+    const target = document.getElementById(modal);
+    closer.addEventListener("click", () => closeModal(target));
+  }
+  // ESCキーでも閉じられるようにする。対象はすべてのモーダル
+  document.addEventListener(
+    "keydown",
+    (event) => event.key === "Escape" && closeAllModals(),
+  );
+});
+```
+
 ### tab
 
 調査中
@@ -308,3 +604,5 @@
 - success
 - warning
 - danger
+
+ボタンなどに色を付けた場合、文字色も見やすい色に変更される。
