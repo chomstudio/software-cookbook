@@ -1,12 +1,12 @@
-# Bluma 逆引きマニュアル
+# Bulma 逆引きマニュアル
 
 ---
 
 - [利用方法](#利用方法)
   - [bulmaを使い始めるには](#bulmaを使い始めるには)
   - [bulmaのドキュメントを見るには](#bulmaのドキュメントを見るには)
+  - [ライト／ダークテーマを固定するには](#ライトダークテーマを固定するには)
 - [レイアウト](#レイアウト)
-- [ライト／ダークテーマを固定するには](#ライトダークテーマを固定するには)
   - [container](#container)
   - [columns/column](#columnscolumn)
   - [grid/cell](#gridcell)
@@ -62,9 +62,7 @@
 
 <https://bulma.io/documentation/>
 
-## レイアウト
-
-## ライト／ダークテーマを固定するには
+### ライト／ダークテーマを固定するには
 
 ```html
 <html lang="ja" data-theme="light">
@@ -77,6 +75,8 @@
   ...
 </html>
 ```
+
+## レイアウト
 
 ### container
 
