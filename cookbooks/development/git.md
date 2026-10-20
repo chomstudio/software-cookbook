@@ -7,11 +7,11 @@
 - [リポジトリ](#リポジトリ)
   - [GitHub上のリポジトリ名を変更するには](#github上のリポジトリ名を変更するには)
   - [CodexによるGit所有者の不一致エラー](#codexによるgit所有者の不一致エラー)
-- [.gitignore](#gitignore)
-  - [.gitignore_globalについて](#gitignore_globalについて)
+  - [キャッシュの削除](#キャッシュの削除)
+- [gitの設定](#gitの設定)
+  - [共通設定ファイルの場所](#共通設定ファイルの場所)
+  - [.gitignoreの環境共通設定](#gitignoreの環境共通設定)
   - [よく使われる gitignore 設定](#よく使われる-gitignore-設定)
-  - [Globalむけ](#globalむけ)
-  - [プロジェクトむけ](#プロジェクトむけ)
 
 ---
 
@@ -56,30 +56,57 @@ git remote -v
 git config --global --add safe.directory <プロジェクトフォルダパス>
 ```
 
-## .gitignore
+### キャッシュの削除
 
-### .gitignore_globalについて
+pushされてほしくないファイルがステージングされてしまった場合、以下のコマンドで解消できる。
+
+```cmd
+git rm <ファイル名> --cached
+```
+
+フォルダの場合は `-r` オプションが必要。
+
+```cmd
+git rm -r <フォルダ名> --cached
+```
+
+すでにコミットしてしまったファイルは上記コマンドでも取り消せない。たとえキャッシュから消えた状態のコミットで上書きしても、その気になれば消されたファイルを履歴から復活させることは可能だからだ。
+APIアクセストークンやユーザー名・パスワードが直接書かれたような重大なファイルをコミットしてしまった場合は、別の方法で削除する。→[リポジトリからの機微なデータの削除](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
+
+## gitの設定
+
+### 共通設定ファイルの場所
+
+gitの共通設定ファイルは、[gitのマニュアル](https://git-scm.com/docs/gitignore/2.22.1#_description)によると、`~/.config/git/config` である。
+Windows11であれば `C:\Users\<ユーザー名>\.config\git\config` となる。
+ここにファイルがないと、 `C:\Users\<ユーザー名>\.gitconfig` が読まれるようだ。
+
+直接ファイルを書き換えることもできるが、コマンドでひとつずつ設定することもできる。
+
+例：
+
+```cmd
+git config --global core.excludesfile ~/.gitignore_global
+```
+
+現在の設定（設定が正しく読まれているか）を確認するには以下。
+
+```cmd
+git config -l
+```
+
+### .gitignoreの環境共通設定
 
 `.gitignore` はそれ自体がリポジトリに内包される。
 つまりリポジトリ公開時は `.gitignore` も公開される。
 
 公開時のことも考えると、プロジェクトの内容に直接関係ない、個人的な動作環境・開発環境に関連する設定は `.gitignore` に書かないほうが良さそうだ。
 
-そのためには `.gitignore_global` を利用する。
-これはそのPC内におけるすべてのgitに共通の `.gitignore` である。
+そのPC内におけるすべてのgitに共通の `.gitignore` を書く方法がある。
+デフォルトでは、`~/.config/git/ignore` に記述する。→[gitのマニュアル](https://git-scm.com/docs/gitignore/2.22.1#_description)
+Windows11であれば `C:\Users\<ユーザー名>\.config\git\ignore` となる。
 
-まず `<ユーザーフォルダ>/.gitconfig` を編集する。
-
-```ini
-[core]
-  excludesfile = .gitignore_global
-```
-
-その後 `<ユーザーフォルダ>/.gitignore_global` を作成する。
-
-あとは通常の `.gitignore` と同じように除外対象を書き込む。
-
-`.gitignore_global` に書いておくとよいもの
+`.config\git\ignore` に書いておくとよいもの
 
 - OSの都合によるもの(`.DS_Store`, `Thumbs.db`, `Desktop.ini` etc)
 - エディタの設定フォルダ(`.vscode` etc)
@@ -87,9 +114,15 @@ git config --global --add safe.directory <プロジェクトフォルダパス>
 - AIエージェントへの指示書(`AGENTS.md`, `prompt.md` etc)
   - ただしそのプロジェクト自体がAIエージェントの利用を前提としている場合を除く
 
+なお、別のパスを指定することもできる。その場合、慣例的によく使われるのは `.gitignore_global` である。
+
+```cmd
+git config --global core.excludesfile ~/.gitignore_global
+```
+
 ### よく使われる gitignore 設定
 
-### Globalむけ
+#### Globalむけ
 
 ```text
 # OS
@@ -97,9 +130,10 @@ git config --global --add safe.directory <プロジェクトフォルダパス>
 Thumbs.db
 Desktop.ini
 
-# Editors / IDE
+# Editors / IDE / Lint
 .vscode/
 .idea/
+.ruff_cache/
 
 # Environment / secrets
 .env
@@ -107,7 +141,7 @@ Desktop.ini
 !.env.example
 ```
 
-### プロジェクトむけ
+#### プロジェクトむけ
 
 ```text
 # Logs
