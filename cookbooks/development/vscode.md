@@ -4,12 +4,30 @@
 
 ---
 
+- [編集一般](#編集一般)
+  - [入力候補を出さないようにするには](#入力候補を出さないようにするには)
 - [Markdown編集](#markdown編集)
   - [Markdown All in Oneの自動目次を特定の見出しレベルだけにするには](#markdown-all-in-oneの自動目次を特定の見出しレベルだけにするには)
 - [HTMLの動作確認](#htmlの動作確認)
   - [ローカルサーバーでHTMLを手早く確認するには](#ローカルサーバーでhtmlを手早く確認するには)
 
 ---
+
+## 編集一般
+
+### 入力候補を出さないようにするには
+
+自動表示だけを止めたいのであれば、まずは次の2項目だけで十分です。
+この設定でも、Ctrl + Space による 手動での補完候補表示は引き続き利用できます。
+
+```json
+{
+  "editor.quickSuggestions": false,
+  "editor.suggestOnTriggerCharacters": false
+}
+```
+
+また、GitHub Copilotなどの拡張機能が独自に表示する候補は、別途その拡張機能の設定が必要な場合があります。
 
 ## Markdown編集
 
@@ -52,12 +70,12 @@
 
 Microsoft製の `Live Preview`（拡張機能ID: `ms-vscode.live-server`）でもローカルサーバーを起動できる。VS Code内で編集と確認を並べたい場合はこちらも便利。
 
-| 比較 | Live Server | Live Preview |
-| --- | --- | --- |
-| 提供元 | Ritwick Dey | Microsoft |
-| 表示先 | 外部ブラウザーが基本 | VS Code内、外部ブラウザーの両方 |
-| 自動更新 | ファイル保存時 | 既定では編集中。保存時のみ、または無効にも設定可能 |
-| 起動操作 | HTMLを右クリックして `Open with Live Server` | HTMLを開き、エディター右上のプレビューボタン |
+| 比較     | Live Server                                  | Live Preview                                       |
+| -------- | -------------------------------------------- | -------------------------------------------------- |
+| 提供元   | Ritwick Dey                                  | Microsoft                                          |
+| 表示先   | 外部ブラウザーが基本                         | VS Code内、外部ブラウザーの両方                    |
+| 自動更新 | ファイル保存時                               | 既定では編集中。保存時のみ、または無効にも設定可能 |
+| 起動操作 | HTMLを右クリックして `Open with Live Server` | HTMLを開き、エディター右上のプレビューボタン       |
 
 `Live Preview` はHTMLを含むフォルダーを開いてから使うと、相対パスを正しく扱いやすい。停止はコマンドパレットの `Live Preview: Stop Server`。自動更新のタイミングは `livePreview.autoRefreshPreview` で変更する。
 
